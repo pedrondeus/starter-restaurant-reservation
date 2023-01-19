@@ -2,6 +2,7 @@
  * Defines the base URL for the API.
  * The default values is overridden by the `API_BASE_URL` environment variable.
  */
+import NewReservations from "../reservationsComponents/NewReservations";
 import formatReservationDate from "./format-reservation-date";
 import formatReservationTime from "./format-reservation-date";
 
@@ -60,6 +61,27 @@ async function fetchJson(url, options, onCancel) {
 
 export async function listReservations(params, signal) {
   const url = new URL(`${API_BASE_URL}/reservations`);
+  Object.entries(params).forEach(([key, value]) =>
+    url.searchParams.append(key, value.toString())
+  );
+  return await fetchJson(url, { headers, signal }, [])
+    .then(formatReservationDate)
+    .then(formatReservationTime);
+}
+
+export async function createReservations(reservation, signal){
+  const url = `${API_BASE_URL}/reservations`
+  const options = {
+    method: "POST",
+    headers,
+    body: JSON.stringify({data:reservation}),
+    signal,
+  };
+  return await fetchJson(url, options);
+}
+
+export async function getReservationsByDate(currentDate, signal){
+  const url = `${API_BASE_URL}/reservations?date=${currentDate}`
   Object.entries(params).forEach(([key, value]) =>
     url.searchParams.append(key, value.toString())
   );
