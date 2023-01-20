@@ -15,16 +15,18 @@ import NewReservations from "../reservationsComponents/NewReservations";
  */
 function Routes() {
   
+  let currentDate = '2025-12-30'
+
   return (
     <Switch>
       <Route exact={true} path="/">
-        <Redirect to={"/dashboard?date=:reservationDate"} />
+        <Redirect to={"/dashboard"} />
       </Route>
-      <Route exact={true} path="/reservations?date=:reservationDate">
-        <Redirect to={"/dashboard?date=:reservationDate"} />
+      <Route exact={true} path="/reservations">
+        <Redirect to={"/dashboard"} />
       </Route>
-      <Route path="/dashboard?date=:reservationDate">
-        <Dashboard date={today()} />
+      <Route path="/dashboard">
+        <Dashboard date={currentDate} />
       </Route>
       <Route path='/reservations/new'>
         <NewReservations />

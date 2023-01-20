@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { listReservations, getReservationsByDate } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { today, next, previous } from "../utils/date-time";
@@ -13,22 +13,26 @@ import { today, next, previous } from "../utils/date-time";
 function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
-  let currentDate = useParams();
+  const [currentDate, setCurrentDate] = useState(date)
+  
 
-  useEffect(loadDashboard, [date]);
+  useEffect(() => {
+    loadDashboard()
+  }, [currentDate]);
 
   function loadDashboard() {
     const abortController = new AbortController();
     setReservationsError(null);
     //listReservations({ date }, abortController.signal)
-    getReservationsByDate({ currentDate }, abortController.signal)
+    getReservationsByDate(currentDate, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
     return () => abortController.abort();
   }
 
+  console.log("reservation", reservations)
   console.log("date", currentDate)
-  console.log("next Date", next(date))
+  console.log("next Date", next(currentDate))
 
   if(date === today()){
     return (
@@ -39,7 +43,7 @@ function Dashboard({ date }) {
       </div>
       <ErrorAlert error={reservationsError} />
       {JSON.stringify(reservations)}
-      <button onClick ={() => currentDate=next(date)}>Next</button>
+      <button onClick ={() => currentDate=next(currentDate)}>Next</button>
     </main>
   );
   } else { 
@@ -51,8 +55,8 @@ function Dashboard({ date }) {
         </div>
         <ErrorAlert error={reservationsError} />
         {JSON.stringify(reservations)}
-        <button onClick ={() => currentDate=previous(date)}>previous</button>
-        <button onClick ={() => currentDate=next(date)}>next</button>
+        <button onClick ={() => setCurrentDate(previous(currentDate))}>previous</button>
+        <button onClick ={() => setCurrentDate(next(currentDate))}>next</button>
       </main>
     );
   }
