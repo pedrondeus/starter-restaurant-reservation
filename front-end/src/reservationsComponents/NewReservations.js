@@ -2,6 +2,7 @@ import React, { useState} from "react";
 import { useHistory  } from "react-router-dom";
 import { createReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
+import { today } from "../utils/date-time";
 
 
 function NewReservations({ Reservations }) {
@@ -15,7 +16,7 @@ function NewReservations({ Reservations }) {
         mobile_number: '',
         reservation_date: '',
         reservation_time: '',
-        people: '',
+        people: '1',
     })
 
 
@@ -52,7 +53,7 @@ function NewReservations({ Reservations }) {
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Reservation Date</label>
-                    <input name="reservation-date" type="date" class="form-control" onChange={handleChange} value={reservation.reservation_date} required={true} />
+                    <input name="reservation-date" type="date" min={today()} max="2035-12-12" class="form-control" onChange={handleChange} value={reservation.reservation_date} required={true} />
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Reservation Time</label>
@@ -60,7 +61,7 @@ function NewReservations({ Reservations }) {
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Number of people</label>
-                    <input name="people" type="number" class="form-control" min="1" max="50" onChange={handleChange} value={reservation.people} required={true} />
+                    <input name="people" type="number" class="form-control"  min="1" max="50" onChange={handleChange} value={reservation.people} required={true} />
                 </div>
 
 

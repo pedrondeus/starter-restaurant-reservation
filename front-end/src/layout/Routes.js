@@ -15,8 +15,6 @@ import NewReservations from "../reservationsComponents/NewReservations";
  */
 function Routes() {
   
-  let currentDate = '2025-12-30'
-
   return (
     <Switch>
       <Route exact={true} path="/">
@@ -26,7 +24,7 @@ function Routes() {
         <Redirect to={"/dashboard"} />
       </Route>
       <Route path="/dashboard">
-        <Dashboard date={currentDate} />
+        <Dashboard />
       </Route>
       <Route path='/reservations/new'>
         <NewReservations />
