@@ -53,11 +53,11 @@ function NewReservations({ Reservations }) {
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Reservation Date</label>
-                    <input name="reservation-date" type="date" min={today()} max="2035-12-12" class="form-control" onChange={handleChange} value={reservation.reservation_date} required={true} />
+                    <input type="date"name="reservation_date" className="form-control" id="reservation_date" pattern="\d{4}-\d{2}-\d{2}" onChange={handleChange} value={reservation.reservation_date} required />
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Reservation Time</label>
-                    <input name="reservation-time" type="time" class="form-control" onChange={handleChange} value={reservation.reservation_time} required={true} />
+                    <input name="reservation_time" type="time" className="form-control" pattern="[0-9]{2}:[0-9]{2}" onChange={handleChange} value={reservation.reservation_time} required={true} />
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Number of people</label>
