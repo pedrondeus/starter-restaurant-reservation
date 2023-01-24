@@ -34,7 +34,35 @@ async function read(req, res){
   res.json({data: reservation})
 }
 
+async function create(req, res, next){
+  const newReservation = ({
+    first_name,
+    last_name,
+    mobile_number,
+    reservation_date,
+    reservation_time,
+    people,
+    created_at,
+    updated_at,
+  } = req.body.data);
+  console.log("request", req)
+  const createdReservation = await service.create(newReservation);
+  res.status(201).json({ data: createdReservation })
+}
+
+//function to validate phone number
+
+//function to check if date is not tuesday, then proceed
+
+//The reservation time is before 10:30 AM.
+
+//The reservation time is after 9:30 PM
+
+//The reservation date and time combination is in the past. Only future reservations are allowed. E.g., if it is noon, only allow reservations starting after noon today.
+
+
 module.exports = {
   list,
-  read:[reservationDateExists,read],
+  read:[reservationDateExists, asyncErrorBoundary(read), read],
+  create: asyncErrorBoundary(create),
 };

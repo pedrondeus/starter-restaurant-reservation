@@ -5,7 +5,7 @@ import ErrorAlert from "../layout/ErrorAlert";
 import { today } from "../utils/date-time";
 
 
-function NewReservations({ Reservations }) {
+function NewReservations() {
 
     let history = useHistory();
     
@@ -29,9 +29,10 @@ function NewReservations({ Reservations }) {
 
     function handleSubmit(e){
         createReservations(reservation).then(() => {
-            history.push("/")//has to be page of the reservation just created
+            history.push(`dashboard?date=${reservation.reservation_date}`)//has to be page of the reservation just created
         })
         .catch(setError)
+        console.log(setError)
     }
 
 
@@ -41,15 +42,15 @@ function NewReservations({ Reservations }) {
             <form name="create" onSubmit={handleSubmit}>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">First Name</label>
-                    <input name="first_name" type="name" class="form-control" onChange={handleChange} value={reservation.first_name} required={true} />
+                    <input name="first_name" type="name" className="form-control" id="first_name" onChange={handleChange} value={reservation.first_name} required={true} />
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Last Name</label>
-                    <input name="last_name" type="name" class="form-control" onChange={handleChange} value={reservation.last_name} required={true}  />
+                    <input name="last_name" type="name" className="form-control" id="last_name" onChange={handleChange} value={reservation.last_name} required={true}  />
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Mobile Number</label>
-                    <input name="mobile_number" type="phone-number" class="form-control" onChange={handleChange} value={reservation.mobile_number} required={true}  />
+                    <input name="mobile_number" type="tel" className="form-control" id="mobile_number" onChange={handleChange} value={reservation.mobile_number} required={true}  />
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Reservation Date</label>
@@ -61,7 +62,7 @@ function NewReservations({ Reservations }) {
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Number of people</label>
-                    <input name="people" type="number" class="form-control"  min="1" max="50" onChange={handleChange} value={reservation.people} required={true} />
+                    <input name="people" type="number" className="form-control"  min="1" max="50" id="people" onChange={handleChange} value={reservation.people} required={true} />
                 </div>
 
 
