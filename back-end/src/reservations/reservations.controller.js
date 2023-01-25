@@ -46,7 +46,7 @@ async function create(req, res, next){
     updated_at,
   } = req.body.data);
   console.log("request", req)
-  const createdReservation = await service.create(newReservation);
+  const createdReservation = await service.create(req.body.data);
   res.status(201).json({ data: createdReservation })
 }
 
@@ -54,15 +54,27 @@ async function create(req, res, next){
 
 //function to check if date is not tuesday, then proceed
 
-//The reservation time is before 10:30 AM.
-
-//The reservation time is after 9:30 PM
-
 //The reservation date and time combination is in the past. Only future reservations are allowed. E.g., if it is noon, only allow reservations starting after noon today.
+
+function validDate(req, res, next){
+  const date=({reservation_date} = req.body)
+  if(date.getDay() === 2 || date > today()){
+    return `The restaurant is closed on Tuesdays`
+  } 
+  next();
+}
+
+//The reservation time is before 10:30 AM.
+//The reservation time is after 9:30 PM
+function validTime(req, res, next){
+  const time = ({reservation_time} = req.body)
+  if(time.)
+}
+
 
 
 module.exports = {
   list,
   read:[reservationDateExists, asyncErrorBoundary(read), read],
-  create: asyncErrorBoundary(create),
+  create:[validDate, asyncErrorBoundary(create)],
 };

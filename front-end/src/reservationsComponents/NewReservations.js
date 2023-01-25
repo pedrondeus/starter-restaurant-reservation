@@ -27,12 +27,18 @@ function NewReservations() {
         })
     }
 
-    function handleSubmit(e){
-        createReservations(reservation).then(() => {
-            history.push(`dashboard?date=${reservation.reservation_date}`)//has to be page of the reservation just created
-        })
-        .catch(setError)
-        console.log(setError)
+    async function handleSubmit(e){
+        e.preventDefault()
+        const abortController = new AbortController();
+        try {
+            const response = await createReservations(reservation, abortController.signal)
+            history.push(`/dashboard?date=${reservation.reservation_date}`)
+            console.log(response);
+            return response;
+        } catch(err) {
+            setError(err)
+        }
+        return () => abortController.abort()
     }
 
 

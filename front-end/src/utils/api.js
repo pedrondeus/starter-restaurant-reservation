@@ -60,9 +60,7 @@ async function fetchJson(url, options, onCancel) {
  */
 
 export async function createReservations(reservation, signal){
-  console.log("creating res")
-  try {
-    const url = `${API_BASE_URL}/reservations`
+  const url = `${API_BASE_URL}/reservations`
   const options = {
     method: "POST",
     headers,
@@ -70,13 +68,7 @@ export async function createReservations(reservation, signal){
     signal,
   };
   return await fetchJson(url, options);  
-  } catch (error) {
-  if (error.name !== "AbortError") {
-    console.error(error.stack);
-    throw error;
-  }
-}}
-
+}
 
 
 export async function listReservations(params, signal) {
