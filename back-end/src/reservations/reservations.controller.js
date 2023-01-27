@@ -57,21 +57,23 @@ async function create(req, res, next){
 //The reservation date and time combination is in the past. Only future reservations are allowed. E.g., if it is noon, only allow reservations starting after noon today.
 
 function validDate(req, res, next){
-  const date=({reservation_date} = req.body)
-  if(date.getDay() === 2 || date > today()){
-    return `The restaurant is closed on Tuesdays`
+  const {reservation_date, reservation_time} = res.locals.reservation;
+  const reserveDate = new Date(reservation_date + "T" + reservation_time);
+  const today = new Date()
+
+  
+  if(reserveDate.getDay() === 2){
+    return next({status:400, message:`The restaurant is closed on Tuesdays`})
   } 
-  next();
+
+  if(reserveDate < today){
+    return next({status:400, message: `The reservation time and date must be in the future`})
+  }
+
+  if(reserveDate < '10:30AM' || reserveDate > '9:30PM'){
+    return next({status:400, message: `The reservation time must be between 10:30AM and 9:30PM`})
+  }
 }
-
-//The reservation time is before 10:30 AM.
-//The reservation time is after 9:30 PM
-function validTime(req, res, next){
-  const time = ({reservation_time} = req.body)
-  if(time.)
-}
-
-
 
 module.exports = {
   list,
