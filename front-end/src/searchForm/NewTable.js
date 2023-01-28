@@ -26,10 +26,8 @@ function NewTable() {
         e.preventDefault()
         const abortController = new AbortController();
         try {
-            //create table function?
-/*             const response = await createReservations(reservation, abortController.signal)
-            history.push(`/dashboard?date=${reservation.reservation_date}`)
-            console.log(response);
+/*             //const response = await 
+            history.push(`/dashboard`)
             return response; */
         } catch(err) {
             setError(err)
@@ -40,7 +38,7 @@ function NewTable() {
 
     return (
         <main>
-            <form>
+            <form name="seat-reservation" onSubmit={handleSubmit}>
             <div class="form-group">
                     <label for="exampleFormControlInput1">Table Name:</label>
                     <input name="table_name" type="name" className="form-control"  min="2"  id="table_name" onChange={handleChange} value={table.table_name} required={true} />

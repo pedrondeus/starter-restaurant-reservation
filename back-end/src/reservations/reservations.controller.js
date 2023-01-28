@@ -10,11 +10,14 @@ async function list(req, res) {
   
   const date = req.query.date;
   console.log(date)
-  
-  const result=await service.read(date);
-  console.log("result", result)
-  
-  res.json({data: result})
+  if(date){
+    const result=await service.read(date);
+    console.log("result", result)
+    res.json({data: result})
+  } else {
+    const result=await service.list();
+    res.json({data: result})
+  }
 }
 
 async function reservationDateExists(req, res, next){

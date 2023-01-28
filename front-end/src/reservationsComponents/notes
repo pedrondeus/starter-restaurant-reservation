@@ -1,0 +1,25 @@
+let listOfAllReservations = allReservations.map((reservation) => {
+    console.log("allReservations DATA:", reservation.firs_name)
+
+    return (
+      <div>
+        <div class="row">
+          <div class="col-sm-4">First Name:</div><div class="col-sm-8">{reservation.first_name}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">Last Name:</div><div class="col-sm-8">{reservation.last_name}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">Mobile Number:</div><div class="col-sm-8">{reservation.mobile_number}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">Reservation Time:</div><div class="col-sm-8">{reservation.reservation_time}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">Number of people:</div><div class="col-sm-8">{reservation.people}</div>
+        </div>
+        <br/>
+        <button className="btn btn-primary" href={`/reservations/${reservation_id}/seat`}>Seat</button>
+      </div>
+    )
+  })
