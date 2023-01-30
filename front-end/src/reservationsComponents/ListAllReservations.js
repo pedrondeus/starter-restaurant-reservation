@@ -2,13 +2,8 @@ import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
 import { useHistory } from "react-router";
 import ErrorAlert from "../layout/ErrorAlert";
+import { BrowserRouter as Router, Link, Route, Switch,useRouteMatch} from "react-router-dom";
 
-/**
- * Defines the dashboard page.
- * @param date
- *  the date for which the user wants to view reservations.
- * @returns {JSX.Element}
- */
 function ListAllReservations() {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
@@ -22,10 +17,6 @@ function ListAllReservations() {
       .then(setReservations)
       .catch(setReservationsError);
     return () => abortController.abort();
-  }
-
-  const handleSubmit = () => {
-    history.push(`dashboard`)
   }
 
   let listOfReservations = reservations.map((reservation) => {
@@ -50,7 +41,9 @@ function ListAllReservations() {
         <div class="row">
             <div class="col-sm-4">Number of people:</div><div class="col-sm-8">{reservation.people}</div>
         </div>
+        <Link to={`/reservations/${reservation.reservation_id}/seat`}>
         <button>Seat</button>
+        </Link>
         <br/>
       </div>
     )
