@@ -5,6 +5,7 @@ exports.up = function(knex) {
         table.increments("table_id").primary()
         table.toString("table_name")
         table.decimal("capacity")
+        table.integer("reservation_id").unsigned().notNullable()
         table.timestamps(true, true)
     })
 };
