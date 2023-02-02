@@ -13,8 +13,15 @@ function create(reservation){
     return knex("reservations").insert(reservation, "*").then((createdReservation) => createdReservation[0])
 }
 
+function update(reservation_id){
+    return knex("reservations")
+    .where({ reservation_id })
+    .update({ status: "seated" })
+}
+
 module.exports = {
     list,
     read,
     create,
+    update,
 }

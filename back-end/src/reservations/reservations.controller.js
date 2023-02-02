@@ -85,8 +85,15 @@ function validDate(req, res, next){
   next()
 }
 
+async function update(req, res) {
+  const reservation_id = Number(req.params.reservation_id);
+  const data = await service.update(reservation_id);
+  res.json({ data });
+}
+
 module.exports = {
   list,
+  update,
   read:[reservationDateExists, asyncErrorBoundary(read), read],
   create:[validDate, asyncErrorBoundary(create)],
 };

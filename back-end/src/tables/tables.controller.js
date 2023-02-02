@@ -17,11 +17,32 @@ async function create(req, res){
     res.status(201).json({data:createdTable})
 }
 
+function update(reservation_id, table_id) {
+    return knex("reservations")
+    .where({ reservation_id })
+    .update({ status: "seated" })
+    .then(() => {
+    return knex("tables")
+    .where({ table_id })
+    .update({ reservation_id })
+    .returning("*");
+    });
+    }
+
 //capacity is less than the  number of people in reservation
 
 //if table is occupied return 400 with error message
 
+async function destroy(req, res) {
+    // your solution here
+    await service.delete(res.locals.table.table_id);
+    res.sendStatus(204);
+  }
+
+
 module.exports = {
     list,
     create,
+    update,
+    delete: [asyncErrorBoundary(destroy)],
 }
