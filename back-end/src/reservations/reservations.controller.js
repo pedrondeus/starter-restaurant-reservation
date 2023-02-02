@@ -8,17 +8,21 @@ const notFound = require("../errors/notFound")
  */
 async function list(req, res) {
   
+  const phone = req.query.mobile_number;
   const date = req.query.date;
-  console.log(date)
-  if(date){
-    const result=await service.read(date);
-    console.log("result", result)
-    res.json({data: result})
-  } else {
-    const result=await service.list();
-    res.json({data: result})
-  }
+  if(phone){
+    const result=await service.search(phone)
+    res.json({data:result})
+  } else if(date) {
+      const result=await service.read(date);
+      console.log("result", result)
+      res.json({data: result})
+    } else {
+      const result=await service.list();
+      res.json({data: result})
+    }
 }
+
 
 async function reservationDateExists(req, res, next){
   //const reservation = await service.read(req.params.reservationDate)

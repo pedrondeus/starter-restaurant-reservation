@@ -53,7 +53,7 @@ function Seat() {
             <option selected>Open this select menu</option>
             {tablesOptions}
         </select>
-        <button onClick={handleSubmit}></button>
+        <button onClick={handleSubmit}>Submit</button>
     </div>
   );
 }

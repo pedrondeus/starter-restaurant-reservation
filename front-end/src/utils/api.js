@@ -87,11 +87,20 @@ export async function getReservationsByDate(params, signal){
   return await fetchJson(url, { headers, signal }, [])
 }
 
+
 export async function listTables(params, signal) {
   const url = new URL(`${API_BASE_URL}/tables`);
   Object.entries(params).forEach(([key, value]) =>
     url.searchParams.append(key, value.toString())
   );
+  return await fetchJson(url, { headers, signal }, [])
+}
+
+
+export async function searchReservation(params, signal){
+  const url = `${API_BASE_URL}/reservations?mobile_number=${params}`
+  console.log("params", params)
+  console.log("url", url)
   return await fetchJson(url, { headers, signal }, [])
 }
 
@@ -120,10 +129,10 @@ export async function updateTables(reservationId, signal){
 
 //check
 export async function removeTableAssignment(tableId, signal){
-  const url = `${API_BASE_URL}/tables/:table_id/seat`
+  const url = `${API_BASE_URL}/tables/${tableId}/seat`
   const options = {
     method: "DELETE",
-    headers, 
-    body: {data: {}}
+
   }
 }
+

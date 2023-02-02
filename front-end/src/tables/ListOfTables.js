@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Link, Route, Switch,useRouteMatch} from "react
 function ListOfTables() {
   const [tables, setTables] = useState([]);
   const [tablesError, setTablesError] = useState(null);
+  const [error, setError] = useState(null)
   const history= useHistory()
   //const userRouterMatch()
 
@@ -19,6 +20,20 @@ function ListOfTables() {
       .then(setTables)
       .catch(setTablesError);
     return () => abortController.abort();
+  }
+
+  async function handleFinish(tableId){
+    const abortController = new AbortController();
+
+    try{
+      if(window.confirm("Is this table ready to seat new guests? This cannot be undone.")){
+        await removeTableAssignment(tableId);
+        history.push(`dashboard`)
+        return await listTables(abortController.signal);
+      } 
+    } catch (error){
+      setError(error)
+    }
   }
 
   let listOfTables = tables.map((table) => {
@@ -40,7 +55,7 @@ function ListOfTables() {
                 <div class="col-sm-4">
                   Occupied
                 </div>
-                <button class="btn btn-large btn-primary" data-toggle="confirmation" data-title="Is this table ready to seat new guests? This cannot be undone." onClick={() => {removeTableAssignment(table.table_id), history.push(`dashboard`)}}>Finish</button>
+                <button class="btn btn-large btn-primary" data-toggle="confirmation" data-title="Is this table ready to seat new guests? This cannot be undone." onClick={() => {handleFinish(table.table_id)}}>Finish</button>
               </div>
               <br/>
             </div>
