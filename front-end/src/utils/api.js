@@ -106,13 +106,24 @@ export async function createTables(table, signal){
   return await fetchJson(url, options);  
 }
 
+//check
 export async function updateTables(reservationId, signal){
-  const url = `${API_BASE_URL}/tables`
-  const option = {
+  const url = `${API_BASE_URL}/tables/:table_id/seat`
+  const options = {
     method: "PUT",
     headers,
     body: {data: {reservation_id: reservationId}},
     signal,
   }
-  return await fetchJson(url, option)
+  return await fetchJson(url, options)
+}
+
+//check
+export async function removeTableAssignment(tableId, signal){
+  const url = `${API_BASE_URL}/tables/:table_id/seat`
+  const options = {
+    method: "DELETE",
+    headers, 
+    body: {data: {}}
+  }
 }

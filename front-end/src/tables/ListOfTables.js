@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { listTables } from "../utils/api";
+import { listTables, removeTableAssignment } from "../utils/api";
 import { useHistory } from "react-router";
 import ErrorAlert from "../layout/ErrorAlert";
 import { BrowserRouter as Router, Link, Route, Switch,useRouteMatch} from "react-router-dom";
@@ -21,11 +21,6 @@ function ListOfTables() {
     return () => abortController.abort();
   }
 
-  const handleSubmit = () => {
-    history.push(`dashboard`)
-  }
-
-
   let listOfTables = tables.map((table) => {
     if(table.reservation_id === null){
         return (
@@ -43,9 +38,9 @@ function ListOfTables() {
               <div class="row">
                 <div class="col-sm-4">{table.table_name}</div>
                 <div class="col-sm-4">
-                  <h5 ></h5>
                   Occupied
                 </div>
+                <button class="btn btn-large btn-primary" data-toggle="confirmation" data-title="Is this table ready to seat new guests? This cannot be undone." onClick={() => {removeTableAssignment(table.table_id), history.push(`dashboard`)}}>Finish</button>
               </div>
               <br/>
             </div>

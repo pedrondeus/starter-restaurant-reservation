@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { listTables, createTables } from "../utils/api";
+import { listTables, removeTableAssignment } from "../utils/api";
 import { useHistory } from "react-router";
 import ErrorAlert from "../layout/ErrorAlert";
 import { BrowserRouter as Router, Link, Route, Switch,useRouteMatch} from "react-router-dom";
@@ -21,7 +21,7 @@ function Seat() {
   }
 
   const handleSubmit = () => {
-
+    
     history.push(`dashboard`)
   }
 
