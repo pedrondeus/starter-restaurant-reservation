@@ -27,25 +27,29 @@ function ListOfTables() {
 
 
   let listOfTables = tables.map((table) => {
-    if(table.is_seated){
+    if(table.reservation_id === null){
+        return (
+          <div>
+          <div class="row">
+            <div class="col-sm-4">{table.table_name}</div>
+            <div class="col-sm-4">Free</div>
+          </div>
+          <br/>
+        </div>
+          )    
+    } else {
         return (
             <div>
               <div class="row">
                 <div class="col-sm-4">{table.table_name}</div>
-                <div class="col-sm-4">Occupied</div>
+                <div class="col-sm-4">
+                  <h5 ></h5>
+                  Occupied
+                </div>
               </div>
               <br/>
             </div>
-          )    
-    } else {
-        return (
-          <div>
-            <div class="row">
-              <div class="col-sm-4">{table.table_name}</div>
-              <div class="col-sm-4">Free</div>
-            </div>
-            <br/>
-          </div>
+
         )
 
     }

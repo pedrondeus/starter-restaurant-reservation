@@ -1,5 +1,20 @@
 const knex = require("../db/connection");
 
-function read()
+function list(){
+    return knex("tables").select("*")
+}
 
-module.exports = {}
+function create(table){
+    return knex("tables").insert(table, "*").then((createdTable) => createdTable[0])
+}
+
+function update(reservationId){
+    return knex("tables")
+        .select("*")
+        .where({"table_id":})
+}
+
+module.exports = {
+    list,
+    create,
+}

@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import useQuery from "../utils/useQuery";
 import ListByDate from "../reservationsComponents/ListByDate";
 import ListAllReservations from "../reservationsComponents/ListAllReservations";
+import ListOfTables from "../tables/ListOfTables";
 import { today } from "../utils/date-time";
 
 /**
@@ -25,6 +26,7 @@ function Dashboard() {
         <h1>Dashboard</h1>
         <ListByDate />
         <ListAllReservations />
+        <ListOfTables />
       </main>
     );
 }

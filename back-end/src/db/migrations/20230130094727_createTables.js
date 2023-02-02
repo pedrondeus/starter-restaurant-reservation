@@ -1,12 +1,14 @@
-const { table } = require("../connection");
-
 exports.up = function(knex) {
     return knex.schema.createTable("tables", (table) => {
         table.increments("table_id").primary()
-        table.toString("table_name")
-        table.decimal("capacity")
-        table.integer("reservation_id").unsigned().notNullable()
-        table.timestamps(true, true)
+        table.string("table_name").notNullable() 
+        table.integer("capacity").notNullable() 
+        table.integer("reservation_id").unsigned()
+        table
+        .foreign("reservation_id")
+        .references("reservation_id")
+        .inTable("reservations")
+        .onDelete("CASCADE");
     })
 };
 

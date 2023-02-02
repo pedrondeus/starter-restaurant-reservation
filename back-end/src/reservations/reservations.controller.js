@@ -64,9 +64,9 @@ function validDate(req, res, next){
   const reserveDate = new Date(reservation_date);
   const today = new Date()
 
-  console.log(reserveDate)
+  console.log("date test", reserveDate.getDay())
 
-  if(reserveDate.getDay() === 2){
+  if(reserveDate.getDay() === 1){
     return next({status:400, message:`The restaurant is closed on Tuesdays`})
   } 
 

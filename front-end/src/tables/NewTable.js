@@ -1,6 +1,6 @@
 import React, { useState} from "react";
 import { useHistory  } from "react-router-dom";
-import { createReservations } from "../utils/api";
+import { createReservations, createTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { today } from "../utils/date-time";
 
@@ -26,9 +26,9 @@ function NewTable() {
         e.preventDefault()
         const abortController = new AbortController();
         try {
-/*             //const response = await 
+            const response = await createTables(table, abortController.signal)
             history.push(`/dashboard`)
-            return response; */
+            return response;
         } catch(err) {
             setError(err)
         }
