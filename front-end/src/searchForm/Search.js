@@ -1,17 +1,14 @@
-import React, { useState, useEffect} from "react";
-import { useHistory  } from "react-router-dom";
-import { searchReservation, listReservationsByPhone } from "../utils/api";
+import React, { useState} from "react";
+import { searchReservation} from "../utils/api";
 import useQuery from "../utils/useQuery";
 import ErrorAlert from "../layout/ErrorAlert";
-import { today } from "../utils/date-time";
-
 
 function Search() {
     const [reservations, setReservations] = useState([]);
     const [reservationsError, setReservationsError] = useState(null);
     const query = useQuery()
     const [phoneNumber, setPhoneNumber] = useState(query.get("mobile_number") || "");
-    const history = useHistory();
+
 
 
     const handleChange = ({target}) => {
@@ -68,6 +65,7 @@ function Search() {
                 <button type="submit" className="btn btn-primary">Submit</button>
             </div>
             </form>
+            <ErrorAlert error={reservationsError} />
             {listOfReservations}
         </main>
     );

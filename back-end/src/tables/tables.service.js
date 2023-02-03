@@ -6,6 +6,15 @@ function readReservation(reservationId){
         .where({reservationId})
 }
 
+function checkCapacity(table_id, reservation_id){
+    return knex("tables")
+        .where({table_id})
+}
+
+function checkStatus(table_id){
+
+}
+
 function list(){
     return knex("tables").select("*")
 }
@@ -14,7 +23,7 @@ function create(table){
     return knex("tables").insert(table, "*").then((createdTable) => createdTable[0])
 }
 
-function update(reservation_id, table_id) {
+function update(table_id, reservation_id) {
     return knex("reservations")
     .where({ reservation_id })
     .update({ status: "seated" })
@@ -48,6 +57,8 @@ async function read(tableId){
 
 module.exports = {
     read,
+    checkCapacity,
+    checkStatus,
     readReservation,
     list,
     create,

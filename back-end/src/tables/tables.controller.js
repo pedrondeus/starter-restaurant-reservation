@@ -17,6 +17,12 @@ async function create(req, res){
     res.status(201).json({data:createdTable})
 }
 
+async function destroy(req, res) {
+  // your solution here
+  await service.delete(res.locals.table.table_id);
+  res.sendStatus(204);
+}
+
 async function update(req, res) {
     const { reservation_id } = req.body.data;
     const table_id = Number(req.params.table_id);
@@ -24,17 +30,23 @@ async function update(req, res) {
     res.json({ data });
     }
 
-
-
 //capacity is less than the  number of people in reservation
+async function checkTableCapacity(req, res, next){
+  const result=await service.checkCapacity(req.params.reservationId);
+  if(result){
+    return next()
+  }
+  next({status:404, message: `Choose a table with with higher capacity.`})
+}
 
 //if table is occupied return 400 with error message
-
-async function destroy(req, res) {
-    // your solution here
-    await service.delete(res.locals.table.table_id);
-    res.sendStatus(204);
+async function isTableOccupied(req, res, next){
+  const result=await service.checkStatus(req.params.reservationId);
+  if(result){
+    return next()
   }
+  next({status:404, message: `The table is occupied.`})
+}
 
   async function reservationExists(req, res, next) {
     const reservation = await service.readReservation(req.params.reservationId);
@@ -59,6 +71,6 @@ async function destroy(req, res) {
 module.exports = {
     list,
     create,
-    update: [tableExists, reservationExists, update],
+    update: [checkTableCapacity, isTableOccupied, tableExists, reservationExists(update), update],
     delete: [tableExists, asyncErrorBoundary(destroy), destroy],
 }

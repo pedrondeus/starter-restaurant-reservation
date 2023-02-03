@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import useQuery from "../utils/useQuery";
-import { listReservations, getReservationsByDate } from "../utils/api";
+import { getReservationsByDate } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { today, next, previous } from "../utils/date-time";
 

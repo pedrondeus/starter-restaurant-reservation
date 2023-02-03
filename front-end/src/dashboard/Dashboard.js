@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router";
-import useQuery from "../utils/useQuery";
+import React from "react";
 import ListByDate from "../reservationsComponents/ListByDate";
 import ListAllReservations from "../reservationsComponents/ListAllReservations";
 import ListOfTables from "../tables/ListOfTables";
-import { today } from "../utils/date-time";
 
 /**
  * Defines the dashboard page.
@@ -13,14 +10,6 @@ import { today } from "../utils/date-time";
  * @returns {JSX.Element}
  */
 function Dashboard() {
-  //const [reservations, setReservations] = useState([]);
-  const [reservationsError, setReservationsError] = useState(null);
-  const query = useQuery()
-  const [date, setDate] = useState(query.get("date") || today())
-  const history = useHistory();
-
- 
-
     return (
       <main>
         <h1>Dashboard</h1>

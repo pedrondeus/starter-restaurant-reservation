@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
 import { useHistory } from "react-router";
 import ErrorAlert from "../layout/ErrorAlert";
-import { BrowserRouter as Router, Link, Route, Switch,useRouteMatch} from "react-router-dom";
+import { BrowserRouter as Link} from "react-router-dom";
 
 function ListAllReservations() {
   const [reservations, setReservations] = useState([]);
@@ -40,6 +40,9 @@ function ListAllReservations() {
         </div>
         <div class="row">
             <div class="col-sm-4">Number of people:</div><div class="col-sm-8">{reservation.people}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">Status:</div><div class="col-sm-8">{reservation.status}</div>
         </div>
         <Link to={`/reservations/${reservation.reservation_id}/seat`}>
         <button>Seat</button>

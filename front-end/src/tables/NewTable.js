@@ -1,9 +1,6 @@
 import React, { useState} from "react";
 import { useHistory  } from "react-router-dom";
-import { createReservations, createTables } from "../utils/api";
-import ErrorAlert from "../layout/ErrorAlert";
-import { today } from "../utils/date-time";
-
+import {  createTables } from "../utils/api";
 
 function NewTable() {
 

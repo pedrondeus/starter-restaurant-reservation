@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { listTables, removeTableAssignment } from "../utils/api";
 import { useHistory } from "react-router";
 import ErrorAlert from "../layout/ErrorAlert";
-import { BrowserRouter as Router, Link, Route, Switch,useRouteMatch} from "react-router-dom";
 
 function ListOfTables() {
   const [tables, setTables] = useState([]);
