@@ -14,12 +14,13 @@ function Search() {
     const history = useHistory();
 
 
-    const handleChange = (target) => {
-        setPhoneNumber(target)
+    const handleChange = ({target}) => {
+        setPhoneNumber(target.value)
     }
 
     async function handleSubmit(e){
         e.preventDefault()
+        console.log("phone number =", phoneNumber)
         const abortController = new AbortController();
         try {
             const response = await searchReservation(phoneNumber, abortController.signal)
@@ -62,7 +63,7 @@ function Search() {
             <form name="seat-reservation" onSubmit={handleSubmit}>
             <div class="form-group">
                 <div class="md-form active-purple active-purple-2 mb-3">
-                    <input name="mobile_number" class="form-control" type="text" placeholder="Enter a customer's phone number" aria-label="Search" onChange={handleChange}  />
+                    <input name="mobile_number" class="form-control" type="text" placeholder="Enter a customer's phone number" aria-label="Search" onChange={handleChange} value={phoneNumber}  />
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </div>

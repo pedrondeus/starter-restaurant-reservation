@@ -17,17 +17,14 @@ async function create(req, res){
     res.status(201).json({data:createdTable})
 }
 
-function update(reservation_id, table_id) {
-    return knex("reservations")
-    .where({ reservation_id })
-    .update({ status: "seated" })
-    .then(() => {
-    return knex("tables")
-    .where({ table_id })
-    .update({ reservation_id })
-    .returning("*");
-    });
+async function update(req, res) {
+    const { reservation_id } = req.body.data;
+    const table_id = Number(req.params.table_id);
+    const data = await service.update(reservation_id, table_id);
+    res.json({ data });
     }
+
+
 
 //capacity is less than the  number of people in reservation
 
@@ -39,10 +36,29 @@ async function destroy(req, res) {
     res.sendStatus(204);
   }
 
+  async function reservationExists(req, res, next) {
+    const reservation = await service.readReservation(req.params.reservationId);
+    console.log("reservation is", reservation);
+    if (reservation) {
+      res.locals.reservation = reservation;
+      return next();
+    }
+    next({ status: 404, message: `Reservation cannot be found.` });
+  }
+
+  async function tableExists(req, res, next){
+    const table = await service.read(req.params.tableId)
+    console.log("table is", table);
+    if(table){
+        res.locals.table = table;
+        return next();
+    }
+    next({ status: 404, message: `Table cannot be found.` });
+  }
 
 module.exports = {
     list,
     create,
-    update,
-    delete: [asyncErrorBoundary(destroy)],
+    update: [tableExists, reservationExists, update],
+    delete: [tableExists, asyncErrorBoundary(destroy), destroy],
 }
