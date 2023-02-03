@@ -7,7 +7,9 @@ function readReservation(reservationId){
 }
 
 function checkCapacity(table_id, reservation_id){
-    return knex("tables")
+    return knex("tables as t")
+        .join(critics)
+        .select()
         .where({table_id})
 }
 

@@ -32,8 +32,9 @@ async function update(req, res) {
 
 //capacity is less than the  number of people in reservation
 async function checkTableCapacity(req, res, next){
-  const result=await service.checkCapacity(req.params.reservationId);
-  if(result){
+  const people = res.locals.reservation.people;
+  const capacity = res.locals.table.capacity;
+  if(capacity >= people){
     return next()
   }
   next({status:404, message: `Choose a table with with higher capacity.`})
@@ -41,8 +42,8 @@ async function checkTableCapacity(req, res, next){
 
 //if table is occupied return 400 with error message
 async function isTableOccupied(req, res, next){
-  const result=await service.checkStatus(req.params.reservationId);
-  if(result){
+  const status = res.locals.table.reservation_id;
+  if(!status){
     return next()
   }
   next({status:404, message: `The table is occupied.`})
@@ -71,6 +72,6 @@ async function isTableOccupied(req, res, next){
 module.exports = {
     list,
     create,
-    update: [checkTableCapacity, isTableOccupied, tableExists, reservationExists(update), update],
+    update: [tableExists, reservationExists, checkTableCapacity, isTableOccupied, update],
     delete: [tableExists, asyncErrorBoundary(destroy), destroy],
 }
