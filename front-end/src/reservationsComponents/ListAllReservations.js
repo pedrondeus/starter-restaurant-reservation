@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
 import { useHistory } from "react-router";
 import ErrorAlert from "../layout/ErrorAlert";
-import { BrowserRouter as Link} from "react-router-dom";
+import { Link} from "react-router-dom";
 
 function ListAllReservations() {
   const [reservations, setReservations] = useState([]);

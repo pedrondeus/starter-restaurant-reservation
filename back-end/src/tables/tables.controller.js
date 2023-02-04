@@ -50,7 +50,7 @@ async function isTableOccupied(req, res, next){
 }
 
   async function reservationExists(req, res, next) {
-    const reservation = await service.readReservation(req.params.reservationId);
+    const reservation = await service.readReservation(res.locals.table.reservation_id);
     console.log("reservation is", reservation);
     if (reservation) {
       res.locals.reservation = reservation;
@@ -60,7 +60,7 @@ async function isTableOccupied(req, res, next){
   }
 
   async function tableExists(req, res, next){
-    const table = await service.read(req.params.tableId)
+    const table = await service.read(req.params.table_id)
     console.log("table is", table);
     if(table){
         res.locals.table = table;
