@@ -1,20 +1,9 @@
 const knex = require("../db/connection");
 
-function readReservation(reservationId){
+function readReservation(reservation_id){
     return knex("reservations")
         .select("*")
-        .where({reservationId})
-}
-
-function checkCapacity(table_id, reservation_id){
-    return knex("tables as t")
-        .join(critics)
-        .select()
-        .where({table_id})
-}
-
-function checkStatus(table_id){
-
+        .where({reservation_id})
 }
 
 function list(){
@@ -59,8 +48,6 @@ async function read(tableId){
 
 module.exports = {
     read,
-    checkCapacity,
-    checkStatus,
     readReservation,
     list,
     create,
